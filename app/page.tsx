@@ -2,126 +2,109 @@
 
 import Logo from "@/components/Logo";
 
+const DM_HISTORY = [
+  { sent: "omg i love your content so much", reply: null },
+  { sent: "this video literally changed my life", reply: null },
+  { sent: "hey i know you probably won't see this but", reply: null },
+  { sent: "happy birthday!! 🎂🎉", reply: null },
+  { sent: "just donated $50 on your stream!", reply: null },
+];
+
 const NOTIFICATIONS = [
-  { user: "Your favorite streamer", action: "went live", time: "2m ago", read: false },
-  { user: "That podcast host", action: "posted a story", time: "14m ago", read: false },
-  { user: "The influencer you DM'd", action: "was active 3m ago", time: "1h ago", read: true },
-  { user: "The creator you donated $500 to", action: "thanked 'everyone'", time: "3h ago", read: true },
-  { user: "Your parasocial best friend", action: "doesn't know your name", time: "always", read: true },
+  { who: "Your favorite streamer", did: "went live", when: "2m ago", unread: true },
+  { who: "That podcast host", did: "posted a story", when: "14m ago", unread: true },
+  { who: "The influencer you DM'd", did: "was active 3m ago", when: "1h ago", unread: false },
+  { who: "Creator you donated $500 to", did: "thanked 'everyone'", when: "3h ago", unread: false },
+  { who: "Your parasocial best friend", did: "doesn't know your name", when: "always", unread: false },
 ];
 
-const MANIFESTO = [
-  {
-    num: "01",
-    title: "You know their coffee order",
-    text: "You know what time they wake up, their dog's name, their take on the market. They have never heard your voice. This is not a relationship. This is a one-way mirror.",
-  },
-  {
-    num: "02",
-    title: "The algorithm sold you a friend",
-    text: "Platforms are loneliness machines that monetize the gap between connection and the illusion of connection. Every notification is a hit. Every 'like' is a transaction.",
-  },
-  {
-    num: "03",
-    title: "Your attention is their income",
-    text: "You are not a fan. You are not a supporter. You are a revenue stream with a profile picture. The parasocial economy runs on your unreciprocated emotional investment.",
-  },
-  {
-    num: "04",
-    title: "The cure is awareness",
-    text: "We are not here to shame you. We are here to name it. Once you see the pattern, you can't unsee it. PARASOCIAL is the mirror the feed doesn't want you to look into.",
-  },
-];
-
-const STATS = [
-  { label: "Hours you watched them", value: "2,847" },
-  { label: "Times they saw your comment", value: "0" },
-  { label: "Messages you sent", value: "342" },
-  { label: "Messages they read", value: "0" },
-];
-
-export default function Home() {
+export default function Page() {
   return (
     <>
-      <div className="grain" />
-
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-[#12121f]/80 border-b border-[#ff6b9d]/10">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Logo size={28} />
-            <span className="font-semibold text-sm text-[#ff6b9d]/80 tracking-wide">PARASOCIAL</span>
-          </div>
-          <a href="https://x.com/ParasocialCoin" target="_blank" rel="noopener noreferrer"
-            className="text-xs px-4 py-1.5 border border-[#ff6b9d]/30 text-[#ff6b9d]/80 rounded-full hover:bg-[#ff6b9d]/10 transition-all">
-            Follow
-          </a>
+      {/* ── NAV ── */}
+      <nav className="fixed top-0 inset-x-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur-sm border-b border-[var(--color-border)] px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Logo size={22} />
+          <span className="text-[11px] font-semibold tracking-wide text-[var(--color-pink)]/60">PARASOCIAL</span>
         </div>
+        <a href="https://x.com/ParasocialCoin" target="_blank" rel="noopener noreferrer"
+          className="text-[11px] font-semibold text-white bg-[var(--color-pink)] px-4 py-1.5 rounded-full hover:bg-[var(--color-pink-dim)] transition-colors">
+          Follow
+        </a>
       </nav>
 
-      {/* Hero */}
-      <section className="min-h-screen flex items-center justify-center px-6 pt-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="fade-up fade-up-1 mb-6">
-            <Logo size={64} className="mx-auto" />
-          </div>
-          <p className="fade-up fade-up-1 text-[#ff6b9d]/60 text-xs font-semibold tracking-[0.3em] uppercase mb-4">
-            The Parasocial Protocol
-          </p>
-          <h1 className="fade-up fade-up-2 text-5xl md:text-7xl font-black tracking-tight leading-[1.1] mb-6">
-            <span className="text-white">They don&apos;t know</span>
-            <br />
-            <span className="text-[#ff6b9d]">you exist</span>
-          </h1>
-          <p className="fade-up fade-up-3 text-lg text-[#b0b0c0] max-w-lg mx-auto leading-relaxed mb-10">
-            You watched every stream. Liked every post. Sent every super chat.
-            <br />
-            They have never said your name.
-          </p>
-          <div className="fade-up fade-up-4">
-            <a href="https://x.com/ParasocialCoin" target="_blank" rel="noopener noreferrer"
-              className="inline-block px-8 py-3 bg-[#ff6b9d] text-white font-semibold rounded-full hover:bg-[#ff6b9d]/90 transition-all text-sm">
-              Break the Illusion →
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* ── HERO: Fake DM conversation ── */}
+      <section className="min-h-[100svh] flex items-center justify-center px-6 pt-16 relative">
+        {/* Ambient pink glow */}
+        <div className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-[var(--color-pink)]/[0.04] blur-[150px] rounded-full pointer-events-none" />
 
-      {/* Stats */}
-      <section className="py-24 px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="section-divider mb-16" />
-          <h2 className="text-center text-2xl md:text-3xl font-bold text-white mb-12 tracking-tight">
-            Your Relationship In Numbers
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {STATS.map((s, i) => (
-              <div key={i} className="notif-card rounded-lg p-5 text-center">
-                <div className="text-2xl font-black text-[#ff6b9d] mb-2">{s.value}</div>
-                <div className="text-xs text-[#b0b0c0]/60">{s.label}</div>
+        <div className="max-w-md w-full">
+          <p className="text-[10px] text-[var(--color-pink)]/40 tracking-[0.3em] uppercase mb-6 text-center anim-up d1">The Parasocial Protocol</p>
+          <h1 className="text-4xl md:text-5xl font-black text-center mb-4 anim-up d2 leading-tight">
+            <span className="text-white">They don&apos;t know</span><br />
+            <span className="text-[var(--color-pink)]">you exist.</span>
+          </h1>
+          <p className="text-center text-sm text-[var(--color-muted)] mb-10 anim-up d3">
+            Your messages. Your donations. Your loyalty.<br />They never saw any of it.
+          </p>
+
+          {/* DM Mock */}
+          <div className="anim-up d4 bg-[var(--color-surface)] rounded-2xl border border-[var(--color-border)] p-5 space-y-3">
+            <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[var(--color-border)]">
+              <div className="w-8 h-8 rounded-full bg-[var(--color-pink)]/10 flex items-center justify-center text-[var(--color-pink)] text-xs">★</div>
+              <div>
+                <p className="text-xs text-white font-semibold">Your Favorite Creator</p>
+                <p className="text-[10px] text-[var(--color-muted)]">Last active 3m ago</p>
+              </div>
+            </div>
+            {DM_HISTORY.map((dm, i) => (
+              <div key={i} className="space-y-2">
+                <div className="flex justify-end">
+                  <div className="bubble-sent">{dm.sent}</div>
+                </div>
+                <div className="flex justify-start">
+                  <div className="bubble-empty">Seen</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Notifications */}
-      <section className="py-24 px-6">
-        <div className="max-w-2xl mx-auto">
-          <div className="section-divider mb-16" />
-          <p className="text-center text-[#ff6b9d]/40 text-xs tracking-[0.3em] uppercase mb-4">Notifications</p>
-          <h2 className="text-center text-2xl md:text-3xl font-bold text-white mb-12 tracking-tight">
-            The Feed That Feeds On You
-          </h2>
-          <div className="space-y-3">
+      {/* ── YOUR RELATIONSHIP IN NUMBERS ── */}
+      <section className="py-16 md:py-24 px-6 border-t border-[var(--color-border)]">
+        <div className="max-w-lg mx-auto">
+          <p className="text-[10px] text-[var(--color-pink)]/40 tracking-[0.3em] uppercase mb-8 text-center">Your Relationship in Numbers</p>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { n: "2,847", l: "Hours you watched them" },
+              { n: "0", l: "Times they saw your comment" },
+              { n: "342", l: "Messages you sent" },
+              { n: "0", l: "Messages they read" },
+            ].map((s, i) => (
+              <div key={i} className="notif text-center py-5 glitch">
+                <div className={`counter ${s.n === '0' ? 'text-[var(--color-pink)]' : 'text-white'}`}>{s.n}</div>
+                <p className="counter-label">{s.l}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── NOTIFICATIONS ── */}
+      <section className="py-16 md:py-24 px-6 border-t border-[var(--color-border)]">
+        <div className="max-w-lg mx-auto">
+          <p className="text-[10px] text-[var(--color-pink)]/40 tracking-[0.3em] uppercase mb-3">Notifications</p>
+          <h2 className="text-2xl font-bold text-white mb-8">The Feed That Feeds On You</h2>
+          <div className="space-y-2">
             {NOTIFICATIONS.map((n, i) => (
-              <div key={i} className={`notif-card rounded-lg px-5 py-4 glitch-hover ${!n.read ? 'border-l-[#ff6b9d]' : 'border-l-[#ff6b9d]/30'}`}>
+              <div key={i} className={`notif glitch ${n.unread ? 'unread' : ''}`}>
                 <div className="flex justify-between items-start">
                   <div>
-                    <span className="text-sm text-white font-medium">{n.user}</span>
-                    <span className="text-sm text-[#b0b0c0]/60"> {n.action}</span>
+                    <span className="text-sm text-white font-medium">{n.who}</span>
+                    <span className="text-sm text-[var(--color-muted)]"> {n.did}</span>
                   </div>
-                  <span className="text-xs text-[#b0b0c0]/30">{n.time}</span>
+                  <span className="text-[10px] text-[var(--color-muted)]">{n.when}</span>
                 </div>
               </div>
             ))}
@@ -129,56 +112,52 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Manifesto */}
-      <section className="py-24 px-6">
-        <div className="max-w-3xl mx-auto">
-          <div className="section-divider mb-16" />
-          <p className="text-center text-[#ff6b9d]/40 text-xs tracking-[0.3em] uppercase mb-4">The Manifesto</p>
-          <h2 className="text-center text-2xl md:text-3xl font-bold text-white mb-16 tracking-tight">
-            Why PARASOCIAL Exists
-          </h2>
-          <div className="space-y-12">
-            {MANIFESTO.map((m) => (
-              <div key={m.num} className="group">
-                <div className="flex items-start gap-6">
-                  <span className="text-[#ff6b9d]/20 text-xs font-bold mt-1 shrink-0">{m.num}</span>
-                  <div>
-                    <h3 className="text-lg font-bold text-white mb-3 group-hover:text-[#ff6b9d] transition-colors">{m.title}</h3>
-                    <p className="text-sm text-[#b0b0c0] leading-relaxed">{m.text}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+      {/* ── THE TRUTH ── */}
+      <section className="py-16 md:py-24 px-6 bg-[var(--color-surface)] border-t border-[var(--color-border)]">
+        <div className="max-w-xl mx-auto space-y-12">
+          <div className="text-center mb-12">
+            <p className="text-[10px] text-[var(--color-pink)]/40 tracking-[0.3em] uppercase mb-3">The Truth</p>
+            <h2 className="text-2xl font-bold text-white">How You Got Here</h2>
           </div>
+          {[
+            { t: "You know their coffee order.", d: "You know what time they wake up, their dog's name, their take on crypto. They have never heard your voice. This is not a relationship. This is surveillance you pay for with attention." },
+            { t: "The algorithm sold you a friend.", d: "Every notification is a hit. Every like is a transaction. Platforms are loneliness machines that monetize the gap between connection and the illusion of connection." },
+            { t: "Your attention is their revenue.", d: "You are not a fan. You are not a supporter. You are a revenue stream with a profile picture and a recurring donation habit." },
+            { t: "Naming it is the first step.", d: "PARASOCIAL doesn't cure the longing. It names it. Once you see the one-way mirror, you can't unsee it. And that's the whole point." },
+          ].map((item, i) => (
+            <div key={i} className="group pl-5 border-l-2 border-[var(--color-pink)]/10 hover:border-[var(--color-pink)]/40 transition-colors">
+              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[var(--color-pink)] transition-colors">{item.t}</h3>
+              <p className="text-sm text-[var(--color-muted)] leading-relaxed">{item.d}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-32 px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="section-divider mb-16" />
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
-            Stop watching. <span className="text-[#ff6b9d]">Start seeing.</span>
+      {/* ── CTA ── */}
+      <section className="py-20 md:py-28 px-6 border-t border-[var(--color-border)] text-center relative">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,107,157,0.03)_0%,transparent_60%)] pointer-events-none" />
+        <div className="relative z-10">
+          <h2 className="text-3xl font-black text-white mb-3">
+            Stop watching.<br />
+            <span className="text-[var(--color-pink)]">Start seeing.</span>
           </h2>
-          <p className="text-sm text-[#b0b0c0] mb-10">The first step is admitting the connection was never real.</p>
+          <p className="text-sm text-[var(--color-muted)] mb-8 max-w-sm mx-auto">
+            The first step is admitting the connection was never real. The second is finding real ones.
+          </p>
           <a href="https://x.com/ParasocialCoin" target="_blank" rel="noopener noreferrer"
-            className="inline-block px-10 py-3.5 bg-[#ff6b9d] text-white font-semibold rounded-full hover:bg-[#ff6b9d]/90 transition-all text-sm">
-            Join the Protocol →
+            className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-[var(--color-pink)] px-6 py-3 rounded-full hover:bg-[var(--color-pink-dim)] transition-colors">
+            <span>𝕏</span> Follow
           </a>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-[#ff6b9d]/10 py-6 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Logo size={18} />
-            <span className="text-xs text-[#ff6b9d]/30">PARASOCIAL</span>
-          </div>
-          <p className="text-[10px] text-[#b0b0c0]/20">They still don&apos;t know you exist.</p>
-          <a href="https://x.com/ParasocialCoin" target="_blank" rel="noopener noreferrer"
-            className="text-xs text-[#b0b0c0]/30 hover:text-[#ff6b9d] transition-colors">𝕏</a>
+      {/* ── FOOTER ── */}
+      <footer className="border-t border-[var(--color-border)] py-6 px-6 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Logo size={14} />
+          <span className="text-[9px] text-[var(--color-pink)]/30">PARASOCIAL</span>
         </div>
+        <p className="text-[9px] text-[var(--color-muted)]/40">They still don&apos;t know you exist.</p>
       </footer>
     </>
   );
